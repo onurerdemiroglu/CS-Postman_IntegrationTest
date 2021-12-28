@@ -1,0 +1,466 @@
+{
+	"info": {
+		"_postman_id": "8c835d39-6805-4966-8186-3f87f16f7117",
+		"name": "Ciceksepeti Bootcamp API Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cityName_ankara",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json(); \r",
+							"var size = Object.keys(jsonData).length;  \r",
+							"var responsLimit = 1000;\r",
+							"var responseTime = pm.response.responseTime; \r",
+							"\r",
+							"tests[\"Size control\"] = size == 6;     \r",
+							"tests[\"pageItemsCount type control\"] = typeof(jsonData.paginationResponse.pageItemsCount) === \"number\"; \r",
+							"tests[\"totalItemsCount type control\"] = typeof(jsonData.paginationResponse.totalItemsCount) === \"number\"; \r",
+							"tests[\"totalPageCount type control\"] = typeof(jsonData.paginationResponse.totalPageCount) === \"number\"; \r",
+							"tests[\"totalCount type control\"] = typeof(jsonData.totalCount) === \"number\"; \r",
+							"tests[\"averageRate type control\"] = typeof(jsonData.averageRate) === \"number\"; \r",
+							"tests[\"averageAllReviewsRate type control\"] = typeof(jsonData.averageAllReviewsRate) === \"number\"; \r",
+							"\r",
+							"\r",
+							"pm.test(\"StarDtos types control\",() => { \r",
+							"    jsonData.starDtos.map((starDtos)=> { \r",
+							"        pm.expect(starDtos.point).to.be.a(\"number\")\r",
+							"        pm.expect(starDtos.percent).to.be.a(\"number\") \r",
+							"        pm.expect(starDtos.count).to.be.a(\"number\") \r",
+							"    })\r",
+							"});  \r",
+							"\r",
+							"pm.test(\"ReviewDtos types control\",() => { \r",
+							"    jsonData.reviewDtos.map((reviewDtos)=> { \r",
+							"        pm.expect(reviewDtos.name).to.be.a(\"string\")\r",
+							"        pm.expect(reviewDtos.comment).to.be.a(\"string\") \r",
+							"        pm.expect(reviewDtos.rating).to.be.a(\"number\")\r",
+							"        pm.expect(reviewDtos.createOn).to.be.a(\"string\")\r",
+							"        pm.expect(reviewDtos.regionName).to.be.a(\"string\")\r",
+							"        pm.expect(reviewDtos.cityName).to.be.a(\"string\")\r",
+							"    })\r",
+							"});  \r",
+							"                   \r",
+							"pm.test(\"Check all cityName 'ANKARA'\",() => { \r",
+							"    jsonData.reviewDtos.map((reviewDtos)=> {  \r",
+							"        pm.expect(reviewDtos.cityName).to.be.eql(\"ANKARA\")\r",
+							"    })\r",
+							"});  \r",
+							"    \r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Status code name has string\", () => {\r",
+							"  pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response time\", () => {  \r",
+							"  if (responseTime > responsLimit) {       \r",
+							"    console.log(\"Response time was longer than \" + responsLimit + \" ms \" + \"(\" + responseTime + \" ms)\" + \" / Response Date: \" + pm.response.headers.get(\"Date\"));\r",
+							"  }\r",
+							"  pm.expect(responseTime).to.be.below(responsLimit); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should not be error\", function () { \r",
+							"    pm.response.to.not.be.error; \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response must be valid\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							" \r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://a7186cd5-de01-4d09-adc9-9cddfb83e72e.mock.pstmn.io/?cityName=ankara",
+					"protocol": "https",
+					"host": [
+						"a7186cd5-de01-4d09-adc9-9cddfb83e72e",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "cityName",
+							"value": "ankara"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "?cityName=ankara",
+							"query": [
+								{
+									"key": "cityName",
+									"value": "ankara"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n  \"paginationResponse\": {\n    \"pageItemsCount\": 20,\n    \"totalItemsCount\": 25005,\n    \"totalPageCount\": 1251\n  },\n  \"totalCount\": 25005,\n  \"starDtos\": [\n    {\n      \"point\": 1,\n      \"percent\": 5,\n      \"count\": 1228\n    },\n    {\n      \"point\": 2,\n      \"percent\": 1,\n      \"count\": 362\n    },\n    {\n      \"point\": 3,\n      \"percent\": 2,\n      \"count\": 606\n    },\n    {\n      \"point\": 4,\n      \"percent\": 9,\n      \"count\": 2247\n    },\n    {\n      \"point\": 5,\n      \"percent\": 82,\n      \"count\": 20562\n    }\n  ],\n  \"averageRate\": 4.5,\n  \"averageAllReviewsRate\": 4.5,\n  \"reviewDtos\": [\n    {\n      \"name\": \"Name Surname\",\n      \"comment\": \"10 luk hizmet \",\n      \"rating\": 10,\n      \"createOn\": \"2021-12-16T08:36:02.101Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"ANKARA\"\n    },\n    {\n      \"name\": \"Name Surname 2\",\n      \"comment\": \"Kaliteli Kargo\",\n      \"rating\": 10,\n      \"createOn\": \"2021-12-16T08:31:53.078Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"ANKARA\"\n    },\n    {\n      \"name\": \"Name Surname 3\",\n      \"comment\": \"Hızlı kargo ve sürpriz için teşekkürler\",\n      \"rating\": 10,\n      \"createOn\": \"2021-12-16T07:49:34.927Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"ANKARA\"\n    },\n    {\n      \"name\": \"Name Surname 4\",\n      \"comment\": \"Eşime aldım, gönderilmedi\",\n      \"rating\": 0,\n      \"createOn\": \"2021-12-16T07:08:19.8Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"HATAY\"\n    }\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "cityName_istanbul",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var size = Object.keys(jsonData).length;  \r",
+							"var responsLimit = 1000;\r",
+							"var responseTime = pm.response.responseTime; \r",
+							"\r",
+							"tests[\"Size control\"] = size == 6;     \r",
+							"tests[\"pageItemsCount type control\"] = typeof(jsonData.paginationResponse.pageItemsCount) === \"number\"; \r",
+							"tests[\"totalItemsCount type control\"] = typeof(jsonData.paginationResponse.totalItemsCount) === \"number\"; \r",
+							"tests[\"totalPageCount type control\"] = typeof(jsonData.paginationResponse.totalPageCount) === \"number\"; \r",
+							"tests[\"totalCount type control\"] = typeof(jsonData.totalCount) === \"number\"; \r",
+							"tests[\"averageRate type control\"] = typeof(jsonData.averageRate) === \"number\"; \r",
+							"tests[\"averageAllReviewsRate type control\"] = typeof(jsonData.averageAllReviewsRate) === \"number\"; \r",
+							"\r",
+							"\r",
+							"pm.test(\"StarDtos types control\",() => { \r",
+							"    jsonData.starDtos.map((starDtos)=> { \r",
+							"        pm.expect(starDtos.point).to.be.a(\"number\")\r",
+							"        pm.expect(starDtos.percent).to.be.a(\"number\") \r",
+							"        pm.expect(starDtos.count).to.be.a(\"number\") \r",
+							"    })\r",
+							"});  \r",
+							"\r",
+							"pm.test(\"ReviewDtos types control\",() => { \r",
+							"    jsonData.reviewDtos.map((reviewDtos)=> { \r",
+							"        pm.expect(reviewDtos.name).to.be.a(\"string\")\r",
+							"        pm.expect(reviewDtos.comment).to.be.a(\"string\") \r",
+							"        pm.expect(reviewDtos.rating).to.be.a(\"number\")\r",
+							"        pm.expect(reviewDtos.createOn).to.be.a(\"string\")\r",
+							"        pm.expect(reviewDtos.regionName).to.be.a(\"string\")\r",
+							"        pm.expect(reviewDtos.cityName).to.be.a(\"string\")\r",
+							"    })\r",
+							"});  \r",
+							"\r",
+							"pm.test(\"Check all cityName 'ISTANBUL'\",() => { \r",
+							"    jsonData.reviewDtos.map((reviewDtos)=> {  \r",
+							"        pm.expect(reviewDtos.cityName).to.be.eql(\"ISTANBUL\")\r",
+							"    })\r",
+							"});  \r",
+							"    \r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Status code name has string\", () => {\r",
+							"  pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response time\", () => {  \r",
+							"  if (responseTime > responsLimit) {       \r",
+							"    console.log(\"Response time was longer than \" + responsLimit + \" ms \" + \"(\" + responseTime + \" ms)\" + \" / Response Date: \" + pm.response.headers.get(\"Date\"));\r",
+							"  }\r",
+							"  pm.expect(responseTime).to.be.below(responsLimit); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should not be error\", function () { \r",
+							"    pm.response.to.not.be.error; \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response must be valid\", function(){\r",
+							"    pm.response.to.be.ok;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://a7186cd5-de01-4d09-adc9-9cddfb83e72e.mock.pstmn.io/?cityName=istanbul",
+					"protocol": "https",
+					"host": [
+						"a7186cd5-de01-4d09-adc9-9cddfb83e72e",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "cityName",
+							"value": "istanbul"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "?cityName=istanbul",
+							"query": [
+								{
+									"key": "cityName",
+									"value": "istanbul"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n  \"paginationResponse\": {\n    \"pageItemsCount\": 20,\n    \"totalItemsCount\": 25005,\n    \"totalPageCount\": 1251\n  },\n  \"totalCount\": 25005,\n  \"starDtos\": [\n    {\n      \"point\": 1,\n      \"percent\": 5,\n      \"count\": 1228\n    },\n    {\n      \"point\": 2,\n      \"percent\": 1,\n      \"count\": 362\n    },\n    {\n      \"point\": 3,\n      \"percent\": 2,\n      \"count\": 606\n    },\n    {\n      \"point\": 4,\n      \"percent\": 9,\n      \"count\": 2247\n    },\n    {\n      \"point\": 5,\n      \"percent\": 82,\n      \"count\": 20562\n    }\n  ],\n  \"averageRate\": 4.5,\n  \"averageAllReviewsRate\": 4.5,\n  \"reviewDtos\": [\n    {\n      \"name\": \"Name Surname\",\n      \"comment\": \"10 luk hizmet \",\n      \"rating\": 10,\n      \"createOn\": \"2021-12-16T08:36:02.101Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"ISTANBUL\"\n    },\n    {\n      \"name\": \"Name Surname 2\",\n      \"comment\": \"Kaliteli Kargo\",\n      \"rating\": 10,\n      \"createOn\": \"2021-12-16T08:31:53.078Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"ISTANBUL\"\n    },\n    {\n      \"name\": \"Name Surname 3\",\n      \"comment\": \"Hızlı kargo ve sürpriz için teşekkürler\",\n      \"rating\": 10,\n      \"createOn\": \"2021-12-16T07:49:34.927Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"ISTANBUL\"\n    },\n    {\n      \"name\": \"Name Surname 4\",\n      \"comment\": \"Eşime aldım, gönderilmedi\",\n      \"rating\": 0,\n      \"createOn\": \"2021-12-16T07:08:19.8Z\",\n      \"regionName\": \"\",\n      \"cityName\": \"ISTANBUL\"\n    }\n  ]\n}"
+				}
+			]
+		},
+		{
+			"name": "cityName_van",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);  \r",
+							"var size = Object.keys(pm.response.json()).length;  \r",
+							"var responsLimit = 1000;\r",
+							"var responseTime = pm.response.responseTime;\r",
+							"\r",
+							"\r",
+							"tests[\"Size control\"] = size == 1;   \r",
+							"tests[\"Message type control\"] = typeof(jsonData.message) === \"string\"; \r",
+							" \r",
+							"\r",
+							"pm.test(\"Check response\", function () {\r",
+							"    pm.expect(jsonData.message).is.eql(\"Not Found\"); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"  pm.response.to.have.status(404);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Status code name has string\", () => {\r",
+							"  pm.response.to.have.status(\"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response time\", () => {  \r",
+							"  if (responseTime > responsLimit) {       \r",
+							"    console.log(\"Response time was longer than \" + responsLimit + \" ms \" + \"(\" + responseTime + \" ms)\" + \" / Response Date: \" + pm.response.headers.get(\"Date\"));\r",
+							"  }\r",
+							"  pm.expect(responseTime).to.be.below(responsLimit); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"API response contains the expected fields\", () => { \r",
+							"  pm.expect(jsonData).to.have.property(\"message\", \"Not Found\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be error\", function () { \r",
+							"    pm.response.to.be.error; \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response must be invalid\", function(){\r",
+							"    pm.response.to.not.be.ok;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://a7186cd5-de01-4d09-adc9-9cddfb83e72e.mock.pstmn.io/?cityName=van",
+					"protocol": "https",
+					"host": [
+						"a7186cd5-de01-4d09-adc9-9cddfb83e72e",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "cityName",
+							"value": "van"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "?cityName=van",
+							"query": [
+								{
+									"key": "cityName",
+									"value": "van"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n  \"message\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "cityName is null",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);  \r",
+							"var size = Object.keys(pm.response.json()).length;  \r",
+							"var responsLimit = 1000;\r",
+							"var responseTime = pm.response.responseTime;\r",
+							"\r",
+							"\r",
+							"tests[\"Size control\"] = size == 1;   \r",
+							"tests[\"CityName type control\"] = typeof(jsonData.cityName[0]) === \"string\"; \r",
+							" \r",
+							"\r",
+							"pm.test(\"Check response\", function () {\r",
+							"    pm.expect(jsonData.cityName[0]).is.eql(\"'cityName' can not be null.\"); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"  pm.response.to.have.status(400);\r",
+							"}); \r",
+							"\r",
+							"pm.test(\"Status code name has string\", () => {\r",
+							"  pm.response.to.have.status(\"Bad Request\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check response time\", () => {  \r",
+							"  if (responseTime > responsLimit) {       \r",
+							"    console.log(\"Response time was longer than \" + responsLimit + \" ms \" + \"(\" + responseTime + \" ms)\" + \" / Response Date: \" + pm.response.headers.get(\"Date\"));\r",
+							"  }\r",
+							"  pm.expect(responseTime).to.be.below(responsLimit); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response should be error\", function () { \r",
+							"    pm.response.to.be.error; \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response must be invalid\", function(){\r",
+							"    pm.response.to.not.be.ok;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://a7186cd5-de01-4d09-adc9-9cddfb83e72e.mock.pstmn.io/?cityName",
+					"protocol": "https",
+					"host": [
+						"a7186cd5-de01-4d09-adc9-9cddfb83e72e",
+						"mock",
+						"pstmn",
+						"io"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "cityName",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "?cityName=",
+							"query": [
+								{
+									"key": "cityName",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n  \"cityName\": [\n    \"'cityName' can not be null.\"\n  ]\n}"
+				}
+			]
+		}
+	]
+}
